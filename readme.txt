@@ -6,3 +6,4 @@ For at starte server skal du først:
 4: Kør server: python manage.py runserver    
 
 hej med dig
+s
