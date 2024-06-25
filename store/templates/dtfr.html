@@ -21,8 +21,14 @@
             <div class="col-md-8">
                 <div class="card bg-light p-5 mt-5 mb-5"> <!-- Added top and bottom margins to the card -->
                     <div class="card-body">
-                        <h5 class="card-title text-center mb-4">Datoer til fremsøgning siden 2017</h5> <!-- Center the title -->
+                        <h5 class="card-title text-center mb-4">Datoer til fremsøgning siden 2017 eller selvvalgt år.</h5> <!-- Center the title -->
+                        
+                        <!-- Year input field with added space -->
+                        <div class="form-group mb-4"> <!-- Added bottom margin to the form-group -->
+                            <label for="yearInput">Vælg år</label>
+                            <input type="number" class="form-control" id="yearInput" name="year" placeholder="YYYY" pattern="\d{4}" required title="Please enter a valid year (e.g., 2023)">
                         </div>
+                        
                         <p>{{ årstal_list }}</p>
                         {% if message %}
                         <div class="alert alert-secondary mt-3 bg-light" role="alert">

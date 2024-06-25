@@ -63,7 +63,7 @@ def tildelt_nummer(request: HttpRequest):
                 test1 = int(test1)
                 test1 = float(test1)
                 udregning = (test1 / konstant) * delta_dage.days
-                message2 = f"Kopier dette i log: Krediterer for tildelt nummer, hvor udregning er: ({test1} / {konstant}) * {delta_dage.days} = {udregning:.2f}."
+                message2 = f"Krediterer for tildelt nummer, hvor udregning er: ({test1} / {konstant}) * {delta_dage.days} = {udregning:.2f}."
                 print(message2)
                 test1_ses = request.session.get('test1', '')
                 test_date_fra_get_ses = request.session.get('test_date_fra', '')
@@ -660,18 +660,35 @@ def dtfr(request: HttpRequest):
     #   For hvert år gået siden 2017 + originale tal med 100
     #   Gentag 12 gange
 
-   # årstal = 201701
-
+    start_år = 201701
+    yearInput = 0
+    start_år_input = 0
 
     år_siden_2017 = datetime.now().year - 2016 #ændr til år_valgt
+    måneder_gået = 12 - datetime.now().month
     årstal_list = []
-
-    #   Looper index_2 7 gange. Definerer årstal med udgangspunkt i 2017. Plusser med 100, 7 gange (index_2 = 1,2->7). Looper resten 12 gange
-    for index_2 in range(år_siden_2017):
-        år = 201701+(100*index_2)
-        for index in range(12):
-            årstal = år+index
-            årstal_list.append(årstal)
+    
+    try:
+        yearInput = request.POST.get('year')
+        start_år_input = f"{yearInput}01"
+        start_år_input_int = int(start_år_input)
+        år_siden_input = datetime.now().year - (int(yearInput)-1)
+        if yearInput:
+            for index_2 in range(år_siden_input):
+                år = start_år_input_int+(100*index_2)
+                for index in range(12):
+                    årstal = år+index
+                    årstal_list.append(årstal)
+    except:        
+        #   Looper index_2 7 gange. Definerer årstal med udgangspunkt i 2017. Plusser med 100, 7 gange (index_2 = 1,2->7). Looper resten 12 gange
+        for index_2 in range(år_siden_2017):
+            år = start_år+(100*index_2)
+            for index in range(12):
+                årstal = år+index
+                årstal_list.append(årstal)
+    
+    #   Da loopet viser for alle 12 måneder, fjernes her differencen mellem alle 12 måneder og måneder gået. 
+    årstal_list = årstal_list[:-måneder_gået]
 
     context = {
         "user_get":user_get,

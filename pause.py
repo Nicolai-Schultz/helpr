@@ -6,10 +6,18 @@ from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 import time
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.chrome.options import Options
 
 
 # Specify the path to ChromeDriver
 #chrome_driver_path = "C:/Users/nico/chromedriver-win64/chromedriver.exe"
+# Configure the Chrome WebDriver with the specified service
+chrome_options = Options()
+chrome_options.add_argument("--headless")  # Run in headless mode
+chrome_options.add_argument("--no-sandbox")
+chrome_options.add_argument("--disable-dev-shm-usage")
+chrome_options.add_argument("--disable-gpu")
+chrome_options.add_argument("--remote-debugging-port=9222") 
 
 # Configure the Chrome WebDriver with the specified service
 s = Service(ChromeDriverManager().install())
@@ -25,7 +33,7 @@ search_input.click()"""
 
 driver.get("https://www.google.com/")
 
-driver.maximize_window()
+#driver.maximize_window()
 
 element = driver.find_element(By.XPATH, "/html/body/div[2]/div[2]/div[3]/span/div/div/div/div[3]/div[1]/button[2]")
 element.click()
